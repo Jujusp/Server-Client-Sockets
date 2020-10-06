@@ -1,11 +1,23 @@
 import socket
 from threading import Thread
 import struct
-
+import hashlib
 TCP_IP = ''
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
 END_TRANSMISION = b'TERMINO'
+
+
+def createVerificationCode(filename):
+    global Verification_code
+    if(Verification_code == 'NoCodigo'):
+        file = open(filename, 'rb')
+        Verification_code = hashlib.md5(file.read()).hexdigest()
+        print(Verification_code)
+        vf = open("MD5.txt", "w")
+        vf.write(Verification_code)
+        vf.close()
+    return Verification_code
 
 
 def recvall(sock, count):
@@ -50,11 +62,11 @@ class ClientThread(Thread):
                 l = f.read(BUFFER_SIZE)
             if not l:
                 f.close()
-                self.sock.close()
                 print('Termino la transferencia')
                 break
         print('Enviando Comando:', repr(END_TRANSMISION))
         send_one_message(self.sock, END_TRANSMISION)
+        self.sock.close()
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

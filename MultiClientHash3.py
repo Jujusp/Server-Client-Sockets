@@ -2,6 +2,7 @@ import socket
 import time
 from threading import Thread
 import struct
+import hascode
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
@@ -53,6 +54,7 @@ class ClientThread(Thread):
                     break
                 # write data to a file
                 f.write(data)
+
         print('Successfully get the file')
         s.close()
         print('connection closed')
