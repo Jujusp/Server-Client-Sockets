@@ -38,9 +38,19 @@ class ClientThread(Thread):
 
     def run(self):
         filename = 'dogs.jpg'
-        f = open(filename, 'rb')
-        d = {1: f.read(BUFFER_SIZE), 2: createVerificationCode(filename)}
+        z = open(filename, 'rb')
+        full_msg = b''
+        while True:
+            l = z.read(BUFFER_SIZE)
+            while (l):
+                full_msg += l
+                l = z.read(BUFFER_SIZE)
+            if not l:
+                z.close()
+                break
+        d = {1: full_msg, 2: createVerificationCode(filename)}
         print(d)
+        f = open(filename, 'rb')
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
