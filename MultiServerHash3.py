@@ -66,8 +66,11 @@ class ClientThread(Thread):
                 break
         print('Enviando Comando:', repr(END_TRANSMISION))
         send_one_message(self.sock, END_TRANSMISION)
-
+        # Envia codigo de verificacion
         send_one_message(self.sock, createVerificationCode(filename).encode())
+        # Recibe respuesta del cliente
+        rta = recv_one_message(self.sock)
+        print(rta)
         self.sock.close()
 
 

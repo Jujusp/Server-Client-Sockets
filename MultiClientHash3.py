@@ -12,10 +12,10 @@ END_TRANSMISION = b'TERMINO'
 def VerificateHash(originalHash, filename):
     file = open(filename, 'rb')
     md5_returned = hashlib.md5(file.read()).hexdigest()
-    if originalHash == md5_returned:
-        return "SI"
+    if originalHash.decode() == md5_returned:
+        return "HASH VERIFICADO"
     else:
-        return "NOUP"
+        return "HASH ALTERADO"
 
 
 def recvall(sock, count):
@@ -65,7 +65,7 @@ class ClientThread(Thread):
                 f.write(data)
             codigoVerificacion = recv_one_message(s)
             rtaVerificacion = VerificateHash(codigoVerificacion, recived_f)
-            print(rtaVerificacion)
+            send_one_message(s, rtaVerificacion.encode())
         print('Successfully get the file')
         s.close()
         print('connection closed')
