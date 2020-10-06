@@ -1,25 +1,10 @@
 import socket
 import time
 from threading import Thread
-import tqdm
-import os
-import hashlib
-import sys
 import struct
-
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
-SEPARATOR = "<SEPARATOR>"
-
-
-def VerficateHash(originalHash, filename):
-    file = open(filename, 'rb')
-    md5_returned = hashlib.md5(file.read()).hexdigest()
-    if originalHash == md5_returned:
-        return "SI"
-    else:
-        return "NOUP"
 
 
 def recvall(sock, count):
@@ -54,42 +39,25 @@ class ClientThread(Thread):
     def run(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
-        received = s.recv(BUFFER_SIZE).decode()
-        filename, filesize, mHash = received.split(SEPARATOR)
-        # remove absolute path if there is
-        filename = os.path.basename(filename)
-        filename = filename.split('.')[0] + \
+        recived_f = 'imgt_thread' + \
             str(self.id) + str(time.time()).split('.')[0] + '.jpg'
-        # convert to integer
-        filesize = int(filesize)
-        progress = tqdm.tqdm(range(
-            filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-        with open(filename, "wb") as f:
-            for _ in progress:
-                # read 1024 bytes from the socket (receive)
-                bytes_read = s.recv(BUFFER_SIZE)
-                if not bytes_read:
-                    # cierra el archivo
+        with open(recived_f, 'wb') as f:
+            print('file opened')
+            while True:
+                # print('receiving data...')
+                data = recv_one_message(s)
+                print('data=%s', (data))
+                if not data:
                     f.close()
-                    # Verificar integridad del mensaje
-                    resVerification = VerficateHash(mHash, filename)
-                    print('\n'+resVerification)
-                    # Informar al servidor si el resultado verificacion
-                    strSize = sys.getsizeof(resVerification)
-                    print(strSize)
-                    # s.send(f"{resVerification}{SEPARATOR}{strSize}".encode())
-                    # file transmitting is done
+                    print('file close()')
                     break
-                else:
-                    # write to the file the bytes we just received
-                    f.write(bytes_read)
-                    # update the progress bar
-                    progress.update(len(bytes_read))
+                # write data to a file
+                f.write(data)
 
-        print('Obtuvo exitosamente el archivo')
+        print('Successfully get the file')
         s.close()
-        print('Conexion cerrrada')
+        print('connection closed')
 
 
-for i in range(1):
+for i in range(25):
     ClientThread(i).start()
