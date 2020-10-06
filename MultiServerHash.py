@@ -9,7 +9,7 @@ BUFFER_SIZE = 1024
 # Variable que almacena el codigo md5 en hexadecimal del archivo a enviar
 Verification_code = 'NoCodigo'
 
-# Crea un codigo de verificacion MD5 por el archivo que se este pasando por parametro y lo escribe en un
+# Crea un codigo de verificacion MD5 por el archivo que se este pasando por parametro y lo escribe en un archivo .txt
 
 
 def createVerificationCode(filename):
