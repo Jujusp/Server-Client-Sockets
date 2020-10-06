@@ -29,11 +29,21 @@ class ClientThread(Thread):
                     break
                 # write data to a file
                 f.write(data)
+            while True:
+                # print('receiving verificationCode...')
+                verificationCode = s.recv(BUFFER_SIZE)
+                print('verificationCode=%s', (verificationCode))
+                if not verificationCode:
+                    f.close()
+                    print('file close()')
+                    break
+                # write verificationCode to a file
+                f.write(verificationCode)
 
         print('Successfully get the file')
         s.close()
         print('connection closed')
 
 
-for i in range(25):
+for i in range(1):
     ClientThread(i).start()

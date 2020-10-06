@@ -37,6 +37,15 @@ class ClientThread(Thread):
                 f.close()
                 self.sock.close()
                 break
+        while True:
+            Verification_code = f.read(BUFFER_SIZE)
+            while (Verification_code):
+                self.sock.send(Verification_code)
+                Verification_code = f.read(BUFFER_SIZE)
+            if not Verification_code:
+                f.close()
+                self.sock.close()
+                break
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
