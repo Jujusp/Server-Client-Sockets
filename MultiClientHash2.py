@@ -3,10 +3,20 @@ import time
 from threading import Thread
 import tqdm
 import os
+import hashlib
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
 SEPARATOR = "<SEPARATOR>"
+
+
+def VerficateHash(originalHash, filename):
+    file = open(filename, 'rb')
+    md5_returned = hashlib.md5(file.read()).hexdigest()
+    if originalHash == md5_returned:
+        return "Verificacion por hash valida."
+    else:
+        return "Verificacion por hash invalida :c ."
 
 
 class ClientThread(Thread):
@@ -19,8 +29,7 @@ class ClientThread(Thread):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
         received = s.recv(BUFFER_SIZE).decode()
-        filename, filesize, verificationHash = received.split(SEPARATOR)
-        print(verificationHash)
+        filename, filesize, mHash = received.split(SEPARATOR)
         # remove absolute path if there is
         filename = os.path.basename(filename)
         filename = filename.split('.')[0] + \
@@ -41,9 +50,13 @@ class ClientThread(Thread):
                 f.write(bytes_read)
                 # update the progress bar
                 progress.update(len(bytes_read))
-        print('Successfully get the file')
+        # Verificar integridad del mensaje
+        resVerifcation = VerficateHash(mHash, filename)
+        # Informar al servidor si el resultado verificacion
+        s.send(f"{resVerifcation}{SEPARATOR}".encode())
+        print('Obtuvo exitosamente el archivo')
         s.close()
-        print('connection closed')
+        print('Coneccion cerrrada')
 
 
 for i in range(1):
