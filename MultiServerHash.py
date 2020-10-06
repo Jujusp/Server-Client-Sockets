@@ -7,6 +7,8 @@ import pickle
 TCP_IP = ''
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
+HEADERSIZE = 10
+
 # Variable que almacena el codigo md5 en hexadecimal del archivo a enviar
 Verification_code = 'NoCodigo'
 
@@ -22,6 +24,7 @@ def createVerificationCode(filename):
         vf = open("MD5.txt", "w")
         vf.write(Verification_code)
         vf.close()
+    return Verification_code
 
 
 class ClientThread(Thread):
@@ -36,6 +39,8 @@ class ClientThread(Thread):
     def run(self):
         filename = 'dogs.jpg'
         f = open(filename, 'rb')
+        d = {1: f.read(BUFFER_SIZE), 2: createVerificationCode(filename)}
+        print(d)
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
@@ -52,7 +57,7 @@ class ClientThread(Thread):
             print("BBBBB::"+str(lv))
             while (lv):
                 self.sock.send(lv)
-                lv = fMd5.read(BUFFER_SIZE)
+                lv = fMd5.read()
                 if not lv:
                     fMd5.close()
                     self.sock.close()
