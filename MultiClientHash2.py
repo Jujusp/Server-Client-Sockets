@@ -44,16 +44,18 @@ class ClientThread(Thread):
                 bytes_read = s.recv(BUFFER_SIZE)
                 if not bytes_read:
                     # nothing is received
+                    # Verificar integridad del mensaje
+                    resVerification = VerficateHash(mHash, filename)
+                    print(resVerification)
+                    # Informar al servidor si el resultado verificacion
+                    s.send(f"{resVerification}{SEPARATOR}".encode())
                     # file transmitting is done
                     break
                 # write to the file the bytes we just received
                 f.write(bytes_read)
                 # update the progress bar
                 progress.update(len(bytes_read))
-        # Verificar integridad del mensaje
-        resVerification = VerficateHash(mHash, filename)
-        # Informar al servidor si el resultado verificacion
-        s.send(f"{resVerification}{SEPARATOR}".encode())
+
         print('Obtuvo exitosamente el archivo')
         s.close()
         print('Conexion cerrrada')

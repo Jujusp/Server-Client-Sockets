@@ -54,17 +54,17 @@ class ClientThread(Thread):
                 bytes_read = f.read(BUFFER_SIZE)
                 if not bytes_read:
                     # file transmitting is done
+                    # Recibe la comprobacion de hash del cliente
+                    msgReceived = self.sock.recv(BUFFER_SIZE).decode()
+                    print(msgReceived)
+                    compVerification = msgReceived.split(SEPARATOR)[0]
+                    print(compVerification)
                     break
                 # we use sendall to assure transimission in
                 # busy networks
                 self.sock.sendall(bytes_read)
                 # update the progress bar
                 progress.update(len(bytes_read))
-        # Recibe la comprobacion de hash del cliente
-        msgReceived = self.sock.recv(BUFFER_SIZE).decode()
-        print(msgReceived)
-        #compVerification = received.split(SEPARATOR)[0]
-        # print(compVerification)
         # close the socket
         self.sock.close()
 
