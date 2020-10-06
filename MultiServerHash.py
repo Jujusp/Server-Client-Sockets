@@ -18,9 +18,9 @@ def createVerificationCode(filename):
         file = open(filename, 'rb')
         Verification_code = hashlib.md5(file.read()).hexdigest()
         print(Verification_code)
-        vf = open("MD5.txt", "w")
-        vf.write(Verification_code)
-        vf.close()
+        #vf = open("MD5.txt", "w")
+        # vf.write(Verification_code)
+        # vf.close()
 
 
 class ClientThread(Thread):
@@ -44,16 +44,18 @@ class ClientThread(Thread):
                 f.close()
                 break
         createVerificationCode(filename)
-        fMd5 = open("MD5.txt", 'rb')
-        while True:
-            lv = fMd5.read(BUFFER_SIZE)
-            while (lv):
-                self.sock.send(l)
-                lv = fMd5.read(BUFFER_SIZE)
-                if not lv:
-                    fMd5.close()
-                    self.sock.close()
-                    break
+        self.sock.send(Verification_code)
+        self.sock.close()
+        #fMd5 = open("MD5.txt", 'rb')
+        # while True:
+        #    lv = fMd5.read(BUFFER_SIZE)
+        #    while (lv):
+        #        self.sock.send(l)
+        #        lv = fMd5.read(BUFFER_SIZE)
+        #        if not lv:
+        #            fMd5.close()
+        #            self.sock.close()
+        #            break
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

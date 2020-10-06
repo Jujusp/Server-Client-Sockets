@@ -29,13 +29,8 @@ class ClientThread(Thread):
                     break
                 # write data to a file
                 f.write(data)
-            while True:
-                # print('receiving data...')
-                data = s.recv(BUFFER_SIZE)
-                print('MD5=%s', (data))
-                if not data:
-                    print('code MD5')
-                    break
+            dataMD5 = s.recv()
+            print('MD5=%s', (dataMD5))
 
         print('Successfully get the file')
         s.close()
