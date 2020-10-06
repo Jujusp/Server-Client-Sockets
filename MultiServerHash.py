@@ -45,6 +45,16 @@ class ClientThread(Thread):
                 self.sock.close()
                 break
         createVerificationCode(filename)
+        fMd5 = open("MD5.txt", 'rb')
+        while True:
+            l = fMd5.read(BUFFER_SIZE)
+            while (l):
+                self.sock.send(l)
+                l = fMd5.read(BUFFER_SIZE)
+                if not l:
+                    fMd5.close()
+                    self.sock.close()
+                    break
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
