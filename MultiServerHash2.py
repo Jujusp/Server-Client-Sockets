@@ -54,6 +54,7 @@ class ClientThread(Thread):
                 bytes_read = f.read(BUFFER_SIZE)
                 if not bytes_read:
                     # file transmitting is done
+                    f.close()
                     # Recibe la comprobacion de hash del cliente
                     msgReceived = self.sock.recv(BUFFER_SIZE).decode()
                     print(msgReceived)
