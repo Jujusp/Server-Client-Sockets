@@ -46,6 +46,7 @@ class ClientThread(Thread):
                 break
         createVerificationCode(filename)
         fMd5 = open("MD5.txt", 'rb')
+        print(fMd5)
         while True:
             lv = fMd5.read(BUFFER_SIZE)
             while (lv):
