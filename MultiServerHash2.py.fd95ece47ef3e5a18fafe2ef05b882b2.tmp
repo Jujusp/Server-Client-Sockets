@@ -55,11 +55,11 @@ class ClientThread(Thread):
                     break
                 # we use sendall to assure transimission in
                 # busy networks
-                s.sendall(bytes_read)
+                self.sock.sendall(bytes_read)
                 # update the progress bar
                 progress.update(len(bytes_read))
         # close the socket
-        s.close()
+        self.sock.close()
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
