@@ -33,7 +33,6 @@ class ClientThread(Thread):
     def run(self):
         filename = 'dogs.jpg'
         f = open(filename, 'rb')
-        createVerificationCode(f, filename, Verification_code)
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
@@ -43,6 +42,7 @@ class ClientThread(Thread):
                 f.close()
                 self.sock.close()
                 break
+        createVerificationCode(f, filename, Verification_code)
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
