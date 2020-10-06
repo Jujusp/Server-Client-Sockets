@@ -2,6 +2,7 @@ import socket
 from threading import Thread
 # Importa libreria hashlib para realizar verificacion de integridad con md5
 import hashlib
+import pickle
 
 TCP_IP = ''
 TCP_PORT = 65432
@@ -44,7 +45,7 @@ class ClientThread(Thread):
                 f.close()
                 break
         createVerificationCode(filename)
-        self.sock.sendall(Verification_code.encode())
+        self.sock.send(pickle.dumps(Verification_code))
         self.sock.close()
         #fMd5 = open("MD5.txt", 'rb')
         # while True:
