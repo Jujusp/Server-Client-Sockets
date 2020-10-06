@@ -40,7 +40,7 @@ class ClientThread(Thread):
         print(" New thread started for "+ip+":"+str(port))
 
     def run(self):
-        filename = './dogs.jpg'
+        filename = 'dogs.jpg'
         # get the file size
         filesize = os.path.getsize(filename)
         print(filesize)

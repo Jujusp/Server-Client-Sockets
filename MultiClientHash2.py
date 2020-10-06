@@ -22,6 +22,8 @@ class ClientThread(Thread):
         filename, filesize = received.split(SEPARATOR)
         # remove absolute path if there is
         filename = os.path.basename(filename)
+        filename += \
+            str(self.id) + str(time.time()).split('.')[0]
         # convert to integer
         filesize = int(filesize)
         progress = tqdm.tqdm(range(
