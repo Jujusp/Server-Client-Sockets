@@ -13,6 +13,7 @@ Verification_code = ''
 
 def createVerificationCode(file):
     Verification_code = hashlib.md5(file.read()).hexdigest()
+    print(Verification_code)
 
 
 class ClientThread(Thread):
