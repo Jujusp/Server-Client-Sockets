@@ -43,6 +43,7 @@ class ClientThread(Thread):
         filename = 'dogs.jpg'
         # get the file size
         filesize = os.path.getsize(filename)
+        print(filesize)
         self.sock.send(f"{filename}{SEPARATOR}{filesize}".encode())
         progress = tqdm.tqdm(range(
             filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
