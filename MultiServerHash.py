@@ -12,7 +12,7 @@ Verification_code = 'NoCodigo'
 # Crea un codigo de verificacion MD5 por el archivo que se este pasando por parametro y lo escribe en un
 
 
-def createVerificationCode(file, filename, Vcode):
+def createVerificationCode(Vcode):
     if(Vcode == 'NoCodigo'):
         Vcode = hashlib.md5(file.read()).hexdigest()
         print(Vcode)
@@ -42,7 +42,7 @@ class ClientThread(Thread):
                 f.close()
                 self.sock.close()
                 break
-        createVerificationCode(f, filename, Verification_code)
+        createVerificationCode(Verification_code)
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
