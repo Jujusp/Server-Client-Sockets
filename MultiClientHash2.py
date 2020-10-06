@@ -52,7 +52,7 @@ class ClientThread(Thread):
                     # Informar al servidor si el resultado verificacion
                     strSize = sys.getsizeof(resVerification)
                     print(strSize)
-                    # print(s.send(f"{resVerification}{SEPARATOR}{strSize}))
+                    s.send(f"{resVerification}{SEPARATOR}{strSize})
                     # file transmitting is done
                     break
                 else:
