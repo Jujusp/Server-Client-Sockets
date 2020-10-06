@@ -15,7 +15,8 @@ class ClientThread(Thread):
     def run(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
-        recived_f = 'imgt_thread'+ str(self.id) + str(time.time()).split('.')[0] + '.jpg'
+        recived_f = 'imgt_thread' + \
+            str(self.id) + str(time.time()).split('.')[0] + '.jpg'
         with open(recived_f, 'wb') as f:
             print('file opened')
             while True:
@@ -34,5 +35,5 @@ class ClientThread(Thread):
         print('connection closed')
 
 
-for i in range(25):
+for i in range(1):
     ClientThread(i).start()
