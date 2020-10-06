@@ -69,8 +69,10 @@ class ClientThread(Thread):
         # Envia codigo de verificacion
         send_one_message(self.sock, createVerificationCode(filename).encode())
         # Recibe respuesta del cliente
-        rta = recv_one_message(self.sock).decode()
-        print(rta)
+        print(self.sock)
+        rta = recv_one_message(self.sock)
+        print(rta.decode())
+
         self.sock.close()
 
 
