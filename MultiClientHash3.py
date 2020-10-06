@@ -65,6 +65,8 @@ class ClientThread(Thread):
                 f.write(data)
             codigoVerificacion = recv_one_message(s)
             rtaVerificacion = VerificateHash(codigoVerificacion, recived_f)
+            print('resultado de validacion: ' + rtaVerificacion)
+            print(rtaVerificacion.encode())
             send_one_message(s, rtaVerificacion.encode())
         print('Successfully get the file')
         s.close()
