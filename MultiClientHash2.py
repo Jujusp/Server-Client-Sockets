@@ -49,7 +49,7 @@ class ClientThread(Thread):
                     resVerification = VerficateHash(mHash, filename)
                     print('\n'+resVerification)
                     # Informar al servidor si el resultado verificacion
-                    s.send(f"{resVerification}{SEPARATOR}".encode())
+                    s.sendall(b"{resVerification}")
                     # file transmitting is done
                     break
                 # write to the file the bytes we just received

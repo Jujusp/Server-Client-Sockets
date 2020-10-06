@@ -56,7 +56,7 @@ class ClientThread(Thread):
                     # file transmitting is done
                     f.close()
                     # Recibe la comprobacion de hash del cliente
-                    msgReceived = self.sock.recv(BUFFER_SIZE).decode()
+                    msgReceived = self.sock.recv(BUFFER_SIZE)
                     print(msgReceived)
                     #compVerification = msgReceived.split(SEPARATOR)[0]
                     # print(compVerification)
