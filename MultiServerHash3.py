@@ -7,6 +7,9 @@ TCP_PORT = 65432
 BUFFER_SIZE = 1024
 END_TRANSMISION = b'TERMINO'
 
+# Variable que almacena el codigo md5 en hexadecimal del archivo a enviar
+Verification_code = 'NoCodigo'
+
 
 def createVerificationCode(filename):
     global Verification_code
