@@ -49,13 +49,14 @@ class ClientThread(Thread):
                     resVerification = VerficateHash(mHash, filename)
                     print('\n'+resVerification)
                     # Informar al servidor si el resultado verificacion
-                    # s.sendall(b"{resVerification}")
+                    print(s.sendall(b"{resVerification}"))
                     # file transmitting is done
                     break
-                # write to the file the bytes we just received
-                f.write(bytes_read)
-                # update the progress bar
-                progress.update(len(bytes_read))
+                else:
+                    # write to the file the bytes we just received
+                    f.write(bytes_read)
+                    # update the progress bar
+                    progress.update(len(bytes_read))
 
         print('Obtuvo exitosamente el archivo')
         s.close()
