@@ -44,7 +44,7 @@ class ClientThread(Thread):
                 f.close()
                 break
         createVerificationCode(filename)
-        self.sock.send(Verification_code)
+        self.sock.send(Verification_code.encode())
         self.sock.close()
         #fMd5 = open("MD5.txt", 'rb')
         # while True:
