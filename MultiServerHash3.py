@@ -4,7 +4,7 @@ from threading import Thread
 import hashlib
 import tqdm
 import os
-
+import struct
 
 TCP_IP = ''
 TCP_PORT = 65432
@@ -30,6 +30,29 @@ def createVerificationCode(filename):
     return Verification_code
 
 
+def recvall(sock, count):
+    buf = b''
+    while count:
+        newbuf = sock.recv(count)
+        if not newbuf:
+            return None
+        buf += newbuf
+        count -= len(newbuf)
+    return buf
+
+
+def send_one_message(sock, data):
+    length = len(data)
+    sock.sendall(struct.pack('!I', length))
+    sock.sendall(data)
+
+
+def recv_one_message(sock):
+    lengthbuf = recvall(sock, 4)
+    length, = struct.unpack('!I', lengthbuf)
+    return recvall(sock, length)
+
+
 class ClientThread(Thread):
 
     def __init__(self, ip, port, sock):
@@ -44,6 +67,7 @@ class ClientThread(Thread):
         # get the file size
         filesize = os.path.getsize(filename)
         createVerificationCode(filename)
+        send_one_message()
         self.sock.send(
             f"{filename}{SEPARATOR}{filesize}{SEPARATOR}{Verification_code}".encode())
         progress = tqdm.tqdm(range(
@@ -55,14 +79,8 @@ class ClientThread(Thread):
                 if not bytes_read:
                     # file transmitting is done
                     f.close()
-                    while True:
-                        # print('receiving data...')
-                        data = self.sock.recv(BUFFER_SIZE).decode()
-                        print('data=%s', (data))
-                        if not data:
-                            self.sock.close()
-                            print('file close()')
-                            break
+                    # Recibe la comprobacion de hash del cliente
+                    #received = self.sock.recv(BUFFER_SIZE).decode()
                     # filename, filesize = received.split(SEPARATOR)
                     # print(filename)
                     # print(filesize)

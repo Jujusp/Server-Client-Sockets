@@ -5,6 +5,8 @@ import tqdm
 import os
 import hashlib
 import sys
+import struct
+
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
@@ -18,6 +20,29 @@ def VerficateHash(originalHash, filename):
         return "SI"
     else:
         return "NOUP"
+
+
+def recvall(sock, count):
+    buf = b''
+    while count:
+        newbuf = sock.recv(count)
+        if not newbuf:
+            return None
+        buf += newbuf
+        count -= len(newbuf)
+    return buf
+
+
+def send_one_message(sock, data):
+    length = len(data)
+    sock.sendall(struct.pack('!I', length))
+    sock.sendall(data)
+
+
+def recv_one_message(sock):
+    lengthbuf = recvall(sock, 4)
+    length, = struct.unpack('!I', lengthbuf)
+    return recvall(sock, length)
 
 
 class ClientThread(Thread):
@@ -52,7 +77,7 @@ class ClientThread(Thread):
                     # Informar al servidor si el resultado verificacion
                     strSize = sys.getsizeof(resVerification)
                     print(strSize)
-                    s.send(f"{resVerification}{SEPARATOR}{strSize}".encode())
+                    # s.send(f"{resVerification}{SEPARATOR}{strSize}".encode())
                     # file transmitting is done
                     break
                 else:
