@@ -1,8 +1,6 @@
 import socket
 import time
 from threading import Thread
-import pickle
-
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
@@ -31,9 +29,13 @@ class ClientThread(Thread):
                     break
                 # write data to a file
                 f.write(data)
-        dataMD5 = s.recvmsg(2048)
-        print(dataMD5)
-        print('MD5=%s', pickle.loads(dataMD5))
+            while True:
+                # print('receiving data...')
+                dataMD5 = s.recv(BUFFER_SIZE)
+                print('MD5=%s', (dataMD5))
+                if not dataMD5:
+                    print('code MD5')
+                    break
         print('Successfully get the file')
         s.close()
         print('connection closed')
