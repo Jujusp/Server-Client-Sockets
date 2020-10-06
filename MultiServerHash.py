@@ -16,9 +16,9 @@ def createVerificationCode(file, filename, Vcode):
     if(Vcode == 'NoCodigo'):
         Vcode = hashlib.md5(file.read()).hexdigest()
         print(Vcode)
-        verification_f = str(filename).split('.')[0]+'MD5' + '.txt'
-        with open(verification_f, 'w') as f:
-            f.write(Vcode)
+        vf = open("MD5.txt", "a")
+        vf.write(Vcode)
+        vf.close()
 
 
 class ClientThread(Thread):
