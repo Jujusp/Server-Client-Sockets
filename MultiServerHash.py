@@ -13,11 +13,12 @@ Verification_code = 'NoCodigo'
 
 
 def createVerificationCode(file, filename):
-    Verification_code = hashlib.md5(file.read()).hexdigest()
-    print(Verification_code)
-    verification_f = str(filename).split('.')[0]+'MD5' + '.txt'
-    with open(verification_f, 'w') as f:
-        f.write(Verification_code)
+    if(Verification_code == 'NoCodigo'):
+        Verification_code = hashlib.md5(file.read()).hexdigest()
+        print(Verification_code)
+        verification_f = str(filename).split('.')[0]+'MD5' + '.txt'
+        with open(verification_f, 'w') as f:
+            f.write(Verification_code)
 
 
 class ClientThread(Thread):
@@ -32,8 +33,7 @@ class ClientThread(Thread):
     def run(self):
         filename = 'dogs.jpg'
         f = open(filename, 'rb')
-        if(Verification_code == 'NoCodigo'):
-            createVerificationCode(f, filename)
+        createVerificationCode(f, filename)
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
