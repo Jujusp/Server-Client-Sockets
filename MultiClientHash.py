@@ -29,7 +29,7 @@ class ClientThread(Thread):
                     break
                 # write data to a file
                 f.write(data)
-            dataMD5 = s.recv()
+            dataMD5 = s.recv(BUFFER_SIZE)
             print('MD5=%s', (dataMD5))
 
         print('Successfully get the file')
