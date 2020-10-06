@@ -45,10 +45,10 @@ class ClientThread(Thread):
                 if not bytes_read:
                     # nothing is received
                     # Verificar integridad del mensaje
-                    resVerification = VerficateHash(mHash, filename)
-                    print(resVerification)
+                    # resVerification = VerficateHash(mHash, filename)
+                    # print(resVerification)
                     # Informar al servidor si el resultado verificacion
-                    s.send(f"{resVerification}{SEPARATOR}".encode())
+                    # s.send(f"{resVerification}{SEPARATOR}".encode())
                     # file transmitting is done
                     break
                 # write to the file the bytes we just received
