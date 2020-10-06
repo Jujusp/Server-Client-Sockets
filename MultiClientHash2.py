@@ -19,7 +19,8 @@ class ClientThread(Thread):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((TCP_IP, TCP_PORT))
         received = s.recv(BUFFER_SIZE).decode()
-        filename, filesize = received.split(SEPARATOR)
+        filename, filesize, verificationHash = received.split(SEPARATOR)
+        print(verificationHashs)
         # remove absolute path if there is
         filename = os.path.basename(filename)
         filename = filename.split('.')[0] + \
