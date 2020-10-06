@@ -61,9 +61,9 @@ class ClientThread(Thread):
                 # update the progress bar
                 progress.update(len(bytes_read))
         # Recibe la comprobacion de hash del cliente
-        received = self.sock.recv(BUFFER_SIZE).decode()
-        compVerifcation = received.split(SEPARATOR)[0]
-        print(compVerifcation)
+        #received = self.sock.recv(BUFFER_SIZE).decode()
+        #compVerification = received.split(SEPARATOR)[0]
+        # print(compVerification)
         # close the socket
         self.sock.close()
 

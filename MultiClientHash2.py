@@ -51,9 +51,9 @@ class ClientThread(Thread):
                 # update the progress bar
                 progress.update(len(bytes_read))
         # Verificar integridad del mensaje
-        resVerifcation = VerficateHash(mHash, filename)
+        #resVerification = VerficateHash(mHash, filename)
         # Informar al servidor si el resultado verificacion
-        s.send(f"{resVerifcation}{SEPARATOR}".encode())
+        # s.send(f"{resVerification}{SEPARATOR}".encode())
         print('Obtuvo exitosamente el archivo')
         s.close()
         print('Coneccion cerrrada')
