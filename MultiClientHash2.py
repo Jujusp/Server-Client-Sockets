@@ -43,12 +43,13 @@ class ClientThread(Thread):
                 # read 1024 bytes from the socket (receive)
                 bytes_read = s.recv(BUFFER_SIZE)
                 if not bytes_read:
-                    # nothing is received
+                    # cierra el archivo
+                    f.close()
                     # Verificar integridad del mensaje
-                    # resVerification = VerficateHash(mHash, filename)
-                    # print(resVerification)
+                    resVerification = VerficateHash(mHash, filename)
+                    print('\n'+resVerification)
                     # Informar al servidor si el resultado verificacion
-                    # s.send(f"{resVerification}{SEPARATOR}".encode())
+                    s.send(f"{resVerification}{SEPARATOR}".encode())
                     # file transmitting is done
                     break
                 # write to the file the bytes we just received
