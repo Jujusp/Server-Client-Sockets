@@ -50,9 +50,9 @@ class ClientThread(Thread):
                     resVerification = VerficateHash(mHash, filename)
                     print('\n'+resVerification)
                     # Informar al servidor si el resultado verificacion
-                    strSize = sys.getsizeof(resVerification)
-                    print(strSize)
-                    s.send(f"{resVerification}{SEPARATOR}{strSize})
+                    # strSize = sys.getsizeof(resVerification)
+                    # print(strSize)
+                    # s.send(f"{resVerification}{SEPARATOR}{strSize}".encode())
                     # file transmitting is done
                     break
                 else:

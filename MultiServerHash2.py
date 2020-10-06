@@ -56,10 +56,10 @@ class ClientThread(Thread):
                     # file transmitting is done
                     f.close()
                     # Recibe la comprobacion de hash del cliente
-                    received = self.sock.recv(BUFFER_SIZE).decode()
-                    filename, filesize = received.split(SEPARATOR)
-                    print(filename)
-                    print(filesize)
+                    # received = self.sock.recv(BUFFER_SIZE).decode()
+                    # filename, filesize = received.split(SEPARATOR)
+                    # print(filename)
+                    # print(filesize)
                     #compVerification = msgReceived.split(SEPARATOR)[0]
                     # print(compVerification)
                     break
