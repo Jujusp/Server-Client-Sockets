@@ -32,8 +32,8 @@ class ClientThread(Thread):
     def run(self):
         filename = 'dogs.jpg'
         f = open(filename, 'rb')
-        # if(Verification_code == 'NoCodigo'):
-        #    createVerificationCode(f, filename)
+        if(Verification_code == 'NoCodigo'):
+            createVerificationCode(f, filename)
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
