@@ -13,10 +13,7 @@ def createVerificationCode(filename):
     if(Verification_code == 'NoCodigo'):
         file = open(filename, 'rb')
         Verification_code = hashlib.md5(file.read()).hexdigest()
-        print(Verification_code)
-        vf = open("MD5.txt", "w")
-        vf.write(Verification_code)
-        vf.close()
+        print("Codigo de verificacion:"+Verification_code)
     return Verification_code
 
 
@@ -64,6 +61,7 @@ class ClientThread(Thread):
                 f.close()
                 print('Termino la transferencia')
                 break
+        send_one_message(self.sock, createVerificationCode(filename))
         print('Enviando Comando:', repr(END_TRANSMISION))
         send_one_message(self.sock, END_TRANSMISION)
         self.sock.close()

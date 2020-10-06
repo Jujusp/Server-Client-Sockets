@@ -2,11 +2,20 @@ import socket
 import time
 from threading import Thread
 import struct
-import hascode
+import hashlib
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
 END_TRANSMISION = b'TERMINO'
+
+
+def VerificateHash(originalHash, filename):
+    file = open(filename, 'rb')
+    md5_returned = hashlib.md5(file.read()).hexdigest()
+    if originalHash == md5_returned:
+        return "SI"
+    else:
+        return "NOUP"
 
 
 def recvall(sock, count):
@@ -54,7 +63,9 @@ class ClientThread(Thread):
                     break
                 # write data to a file
                 f.write(data)
-
+            codigoVerificacion = recv_one_message(s)
+            rtaVerificacion = VerificateHash(codigoVerificacion, recived_f)
+            print(rtaVerificacion)
         print('Successfully get the file')
         s.close()
         print('connection closed')
