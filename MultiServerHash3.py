@@ -64,9 +64,10 @@ class ClientThread(Thread):
                 f.close()
                 print('Termino la transferencia')
                 break
-        send_one_message(self.sock, createVerificationCode(filename).encode())
         print('Enviando Comando:', repr(END_TRANSMISION))
         send_one_message(self.sock, END_TRANSMISION)
+
+        send_one_message(self.sock, createVerificationCode(filename).encode())
         self.sock.close()
 
 
