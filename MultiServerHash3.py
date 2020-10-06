@@ -38,7 +38,7 @@ def send_one_message(sock, data):
 
 
 def recv_one_message(sock):
-    lengthbuf = recvall(sock, BUFFER_SIZE)
+    lengthbuf = recvall(sock, 4)
     length, = struct.unpack('!I', lengthbuf)
     return recvall(sock, length)
 
