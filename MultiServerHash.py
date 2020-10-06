@@ -46,9 +46,10 @@ class ClientThread(Thread):
                 break
         createVerificationCode(filename)
         fMd5 = open("MD5.txt", 'rb')
-        print(fMd5)
+        print("AAAA::"+fMd5)
         while True:
             lv = fMd5.read(BUFFER_SIZE)
+            print("BBBBB::"+lv)
             while (lv):
                 self.sock.send(lv)
                 lv = fMd5.read(BUFFER_SIZE)
