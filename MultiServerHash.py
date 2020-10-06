@@ -16,7 +16,7 @@ def createVerificationCode(file, filename):
     Verification_code = hashlib.md5(file.read()).hexdigest()
     print(Verification_code)
     verification_f = str(filename)+'MD5' + '.txt'
-    with open(verification_f, 'wb') as f:
+    with open(verification_f, 'w') as f:
         f.write(Verification_code)
 
 
