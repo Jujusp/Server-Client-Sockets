@@ -42,7 +42,6 @@ class ClientThread(Thread):
                 l = f.read(BUFFER_SIZE)
             if not l:
                 f.close()
-                self.sock.close()
                 break
         createVerificationCode(filename)
         fMd5 = open("MD5.txt", 'rb')
