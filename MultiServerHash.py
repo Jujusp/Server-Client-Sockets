@@ -28,7 +28,6 @@ class ClientThread(Thread):
     def run(self):
         filename = 'dogs.jpg'
         f = open(filename, 'rb')
-        print(createVerificationCode(f))
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
