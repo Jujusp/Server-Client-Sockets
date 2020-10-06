@@ -31,7 +31,7 @@ class ClientThread(Thread):
                     break
                 # write data to a file
                 f.write(data)
-        dataMD5 = s.recv(BUFFER_SIZE)
+        dataMD5 = s.recvmsg(2048)
         print(dataMD5)
         print('MD5=%s', pickle.loads(dataMD5))
         print('Successfully get the file')
