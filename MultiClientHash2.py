@@ -20,7 +20,7 @@ class ClientThread(Thread):
         s.connect((TCP_IP, TCP_PORT))
         received = s.recv(BUFFER_SIZE).decode()
         filename, filesize, verificationHash = received.split(SEPARATOR)
-        print(verificationHashs)
+        print(verificationHash)
         # remove absolute path if there is
         filename = os.path.basename(filename)
         filename = filename.split('.')[0] + \
