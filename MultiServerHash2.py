@@ -56,7 +56,8 @@ class ClientThread(Thread):
                     # file transmitting is done
                     f.close()
                     # Recibe la comprobacion de hash del cliente
-                    # received = self.sock.recv(BUFFER_SIZE).decode()
+                    received = self.sock.recv(BUFFER_SIZE).decode()
+                    print(received)
                     # filename, filesize = received.split(SEPARATOR)
                     # print(filename)
                     # print(filesize)
