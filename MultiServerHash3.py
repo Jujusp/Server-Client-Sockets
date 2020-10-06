@@ -5,6 +5,7 @@ import struct
 TCP_IP = ''
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
+END_TRANSMISION = b'TERMINO'
 
 
 def recvall(sock, count):
@@ -25,7 +26,7 @@ def send_one_message(sock, data):
 
 
 def recv_one_message(sock):
-    lengthbuf = recvall(sock, 4)
+    lengthbuf = recvall(sock, BUFFER_SIZE)
     length, = struct.unpack('!I', lengthbuf)
     return recvall(sock, length)
 
@@ -45,12 +46,15 @@ class ClientThread(Thread):
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
-                send_one_message(self.sock.send, l)
+                send_one_message(self.sock, l)
                 l = f.read(BUFFER_SIZE)
             if not l:
                 f.close()
                 self.sock.close()
+                print('Termino la transferencia')
                 break
+        print('Enviando Comando:', repr(END_TRANSMISION))
+        send_one_message(self.sock, END_TRANSMISION)
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

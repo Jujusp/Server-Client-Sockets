@@ -5,6 +5,7 @@ import struct
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
+END_TRANSMISION = b'TERMINO'
 
 
 def recvall(sock, count):
@@ -44,20 +45,18 @@ class ClientThread(Thread):
         with open(recived_f, 'wb') as f:
             print('file opened')
             while True:
-                # print('receiving data...')
                 data = recv_one_message(s)
                 print('data=%s', (data))
-                if not data:
+                if repr(data) == repr(END_TRANSMISION):
                     f.close()
                     print('file close()')
                     break
                 # write data to a file
                 f.write(data)
-
         print('Successfully get the file')
         s.close()
         print('connection closed')
 
 
-for i in range(25):
+for i in range(1):
     ClientThread(i).start()
