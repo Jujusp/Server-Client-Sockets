@@ -12,13 +12,13 @@ Verification_code = 'NoCodigo'
 # Crea un codigo de verificacion MD5 por el archivo que se este pasando por parametro y lo escribe en un
 
 
-def createVerificationCode(file, filename):
-    if(Verification_code == 'NoCodigo'):
-        Verification_code = hashlib.md5(file.read()).hexdigest()
-        print(Verification_code)
+def createVerificationCode(file, filename, Vcode):
+    if(Vcode == 'NoCodigo'):
+        Vcode = hashlib.md5(file.read()).hexdigest()
+        print(Vcode)
         verification_f = str(filename).split('.')[0]+'MD5' + '.txt'
         with open(verification_f, 'w') as f:
-            f.write(Verification_code)
+            f.write(Vcode)
 
 
 class ClientThread(Thread):
@@ -33,7 +33,7 @@ class ClientThread(Thread):
     def run(self):
         filename = 'dogs.jpg'
         f = open(filename, 'rb')
-        createVerificationCode(f, filename)
+        createVerificationCode(f, filename, Verification_code)
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
