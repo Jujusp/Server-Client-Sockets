@@ -50,28 +50,30 @@ class ClientThread(Thread):
                 break
         d = {1: full_msg, 2: createVerificationCode(filename)}
         print(d)
-        f = open(filename, 'rb')
-        while True:
-            l = f.read(BUFFER_SIZE)
-            while (l):
-                self.sock.send(l)
-                l = f.read(BUFFER_SIZE)
-            if not l:
-                f.close()
-                break
-        createVerificationCode(filename)
-        fMd5 = open("MD5.txt", 'rb')
-        print("AAAA::"+str(fMd5))
-        while True:
-            lv = fMd5.read(BUFFER_SIZE)
-            print("BBBBB::"+str(lv))
-            while (lv):
-                self.sock.send(lv)
-                lv = fMd5.read()
-                if not lv:
-                    fMd5.close()
-                    self.sock.close()
-                    break
+        msg = pickle.dumps(d)
+        self.sock.send(msg)
+        #f = open(filename, 'rb')
+        # while True:
+        #    l = f.read(BUFFER_SIZE)
+        #    while (l):
+        #        self.sock.send(l)
+        #        l = f.read(BUFFER_SIZE)
+        #    if not l:
+        #        f.close()
+        #        break
+        # createVerificationCode(filename)
+        #fMd5 = open("MD5.txt", 'rb')
+        # print("AAAA::"+str(fMd5))
+        # while True:
+        #    lv = fMd5.read(BUFFER_SIZE)
+        #    print("BBBBB::"+str(lv))
+        #    while (lv):
+        #        self.sock.send(lv)
+        #        lv = fMd5.read()
+        #        if not lv:
+        #            fMd5.close()
+        #            self.sock.close()
+        #            break
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
