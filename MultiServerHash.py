@@ -7,13 +7,18 @@ TCP_IP = ''
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
 # Variable que almacena el codigo md5 en hexadecimal del archivo a enviar
-Verification_code = ''
-# Crea un codigo de verificacion MD5 por el archivo que se este pasando por parametro
+Verification_code = 'NoCodigo'
+
+# Crea un codigo de verificacion MD5 por el archivo que se este pasando por parametro y lo escribe en un
 
 
-def createVerificationCode(file):
+def createVerificationCode(file, filename):
     Verification_code = hashlib.md5(file.read()).hexdigest()
     print(Verification_code)
+    verification_f = str(filename)+'MD5' + \
+        + '.txt'
+    with open(verification_f, 'wb') as f:
+        f.write(Verification_code)
 
 
 class ClientThread(Thread):
@@ -28,20 +33,14 @@ class ClientThread(Thread):
     def run(self):
         filename = 'dogs.jpg'
         f = open(filename, 'rb')
+        if(Verification_code == 'NoCodigo'):
+            createVerificationCode(f, filename)
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
                 self.sock.send(l)
                 l = f.read(BUFFER_SIZE)
             if not l:
-                f.close()
-                self.sock.close()
-                break
-        while True:
-            while (Verification_code):
-                self.sock.send(Verification_code)
-                Verification_code = Verification_code.read(BUFFER_SIZE)
-            if not Verification_code:
                 f.close()
                 self.sock.close()
                 break
