@@ -4,6 +4,7 @@ from threading import Thread
 import tqdm
 import os
 import hashlib
+import sys
 TCP_IP = '34.71.37.77'
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
@@ -49,7 +50,9 @@ class ClientThread(Thread):
                     resVerification = VerficateHash(mHash, filename)
                     print('\n'+resVerification)
                     # Informar al servidor si el resultado verificacion
-                    print(s.sendall(b"{resVerification}"))
+                    strSize = sys.getsizeof(resVerification)
+                    print(strSize)
+                    # print(s.send(f"{resVerification}{SEPARATOR}{strSize}))
                     # file transmitting is done
                     break
                 else:
