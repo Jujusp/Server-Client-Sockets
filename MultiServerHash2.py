@@ -2,12 +2,15 @@ import socket
 from threading import Thread
 # Importa libreria hashlib para realizar verificacion de integridad con md5
 import hashlib
-import pickle
+import tqdm
+import os
+
 
 TCP_IP = ''
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
 HEADERSIZE = 10
+SEPARATOR = "<SEPARATOR>"
 
 # Variable que almacena el codigo md5 en hexadecimal del archivo a enviar
 Verification_code = 'NoCodigo'
@@ -38,42 +41,25 @@ class ClientThread(Thread):
 
     def run(self):
         filename = 'dogs.jpg'
-        z = open(filename, 'rb')
-        full_msg = b''
-        while True:
-            l = z.read(BUFFER_SIZE)
-            while (l):
-                full_msg += l
-                l = z.read(BUFFER_SIZE)
-            if not l:
-                z.close()
+        # get the file size
+        filesize = os.path.getsize(filename)
+        self.sock.send(f"{filename}{SEPARATOR}{filesize}".encode())
+        progress = tqdm.tqdm(range(
+            filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+    with open(filename, "rb") as f:
+        for _ in progress:
+            # read the bytes from the file
+            bytes_read = f.read(BUFFER_SIZE)
+            if not bytes_read:
+                # file transmitting is done
                 break
-        d = {1: full_msg, 2: createVerificationCode(filename)}
-        #print(d)
-        msg = pickle.dumps(d)
-        self.sock.send(msg)
-        #f = open(filename, 'rb')
-        # while True:
-        #    l = f.read(BUFFER_SIZE)
-        #    while (l):
-        #        self.sock.send(l)
-        #        l = f.read(BUFFER_SIZE)
-        #    if not l:
-        #        f.close()
-        #        break
-        # createVerificationCode(filename)
-        #fMd5 = open("MD5.txt", 'rb')
-        # print("AAAA::"+str(fMd5))
-        # while True:
-        #    lv = fMd5.read(BUFFER_SIZE)
-        #    print("BBBBB::"+str(lv))
-        #    while (lv):
-        #        self.sock.send(lv)
-        #        lv = fMd5.read()
-        #        if not lv:
-        #            fMd5.close()
-        #            self.sock.close()
-        #            break
+            # we use sendall to assure transimission in
+            # busy networks
+            s.sendall(bytes_read)
+            # update the progress bar
+            progress.update(len(bytes_read))
+    # close the socket
+    s.close()
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
