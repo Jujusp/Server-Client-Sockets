@@ -34,11 +34,11 @@ class ClientThread(Thread):
                 verificationCode = s.recv(BUFFER_SIZE)
                 print('verificationCode=%s', (verificationCode))
                 if not verificationCode:
-                    f.close()
+                    # f.close()
                     print('file close()')
                     break
                 # write verificationCode to a file
-                f.write(verificationCode)
+                # f.write(verificationCode)
 
         print('Successfully get the file')
         s.close()

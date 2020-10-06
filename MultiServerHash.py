@@ -38,10 +38,9 @@ class ClientThread(Thread):
                 self.sock.close()
                 break
         while True:
-            Verification_code = f.read(BUFFER_SIZE)
             while (Verification_code):
                 self.sock.send(Verification_code)
-                Verification_code = f.read(BUFFER_SIZE)
+                Verification_code = Verification_code.read(BUFFER_SIZE)
             if not Verification_code:
                 f.close()
                 self.sock.close()
