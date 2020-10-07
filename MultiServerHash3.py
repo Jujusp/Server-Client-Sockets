@@ -94,9 +94,9 @@ class ClientThread(Thread):
         numPaquetesCliente, numBytesCliente = recv_one_message(
             self.sock).decode().split(';')
         print("num"+numPaquetesCliente)
-        numPaquetesRecibidos += numPaquetesCliente
+        numPaquetesRecibidos += int(numPaquetesCliente)
         print("by"+numBytesCliente)
-        bytesRecibidos += numBytesCliente
+        bytesRecibidos += int(numBytesCliente)
         self.sock.close()
         with open(LogTxt, 'w') as log:
             tFinal = time.time_ns()
@@ -127,7 +127,7 @@ print("Listo, menciona el numero de clientes a los que quieres antender en simul
 opcion2 = int(input("Ingresa el numero de clientes: "))
 # Preparacion del log
 LogTxt = 'log_servidor' + \
-    '_'+str(time.time()).split('.')[0] + '.txt'
+    '_'+str(datetime.datetime.now()) + '.txt'
 
 with open(LogTxt, 'w') as log:
     log.write("Fecha y hora de la prueba: " +

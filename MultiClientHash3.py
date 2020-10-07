@@ -53,7 +53,7 @@ class ClientThread(Thread):
     def run(self):
         # Preparacion del log
         LogTxt = 'log_cliente_' + \
-            str(self.id) + '_'+str(time.time()).split('.')[0] + '.txt'
+            str(self.id) + '_'+str(datetime.datetime.now()) + '.txt'
         # Variables usadas por el log
         tInicio = 0
         tFinal = 0
