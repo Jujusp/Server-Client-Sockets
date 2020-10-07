@@ -69,7 +69,7 @@ class ClientThread(Thread):
             log.write("Tiempo de inicio de ejecucion de Th_" +
                       str(self.id)+" : "+str(tInicio)+'\n')
             recived_f = 'archivo' + \
-                str(self.id) + str(time.time()).split('.')[0] + '.jpg'
+                str(self.id) + str(time.time()).split('.')[0] + '.mp4'
 
             with open(recived_f, 'wb') as f:
                 print('Archivo abierto')

@@ -122,8 +122,7 @@ print("Hola!, bienvenido a la aplicacion del grupo 11, por favor selecciona el a
 print("1. Video 1 de  100 MB"+"\n")
 print("2. Video 2 de  250 MB"+"\n")
 opcion = int(input("Ingresa una opción: "))
-#fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4'
-fileGlobal = 'dogs.jpg'
+fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4'
 print("Listo, menciona el numero de clientes a los que quieres antender en simultaneo para enviar el archivo: "+"\n")
 opcion2 = int(input("Ingresa el numero de clientes: "))
 # Preparacion del log
