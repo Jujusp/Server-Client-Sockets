@@ -50,11 +50,12 @@ def recv_one_message(sock):
 
 class ClientThread(Thread):
 
-    def __init__(self, ip, port, sock):
+    def __init__(self, ip, port, sock, id):
         Thread.__init__(self)
         self.ip = ip
         self.port = port
         self.sock = sock
+        self.id = id
         print(" Nuevo Thread comenzado por "+ip+":"+str(port))
 
     def run(self):
@@ -100,16 +101,18 @@ class ClientThread(Thread):
         self.sock.close()
         with open(LogTxt, 'w') as log:
             tFinal = time.time_ns()
-            log.write("Tiempo final de ejecucion: " + str(tFinal) + '\n')
-            log.write("Tiempo de ejecucion: " + str((tFinal-tInicio)) + '\n')
-            log.write("Numero de paquetes enviados: " +
+            log.write("Tiempo final de ejecucion del th" + self.id + : " + str(tFinal) + '\n')
+            log.write("Tiempo de ejecucion desde inicio de la prueba" + self.id + : " + str((tFinal-tInicio)) + '\n')
+            log.write("Numero de paquetes enviados hasta el th" + self.id + ": " +
                       str(numPaquetesEnviados) + "\n")
-            log.write("Numero de paquetes recibidos: " +
+            log.write("Numero de paquetes recibidos hasta el th" + self.id + ": " +
                       str(numPaquetesRecibidos) + "\n")
-            log.write("Numero de bytes enviados: " + str(bytesEnviados) + "\n")
-            log.write("Numero de bytes recibidos: " +
+            log.write("Numero de bytes enviados hasta el th" +
+                      self.id + ": " + str(bytesEnviados) + "\n")
+            log.write("Numero de bytes recibidos hasta el th" + self.id + ": " +
                       str(bytesRecibidos) + "\n")
-            log.write("Correctitud del envio: " + str(correctoGlobal) + "\n")
+            log.write("Correctitud del envio hasta el th" +
+                      self.id + ": " + str(correctoGlobal) + "\n")
             log.close()
 
 
@@ -133,12 +136,16 @@ with open(LogTxt, 'w') as log:
     log.write("Fecha y hora de la prueba: " +
               str(datetime.datetime.now()) + '\n')
     log.close()
+
+clientId = 0
+
 while True:
     tcpsock.listen(25)
     print("Esperando por conexiones entrantes...")
     (conn, (ip, port)) = tcpsock.accept()
     print('Conexion desde  ', (ip, port))
-    newthread = ClientThread(ip, port, conn)
+    clientId += 1
+    newthread = ClientThread(ip, port, conn, clientId)
     threads.append(newthread)
     while len(threads) >= opcion2:
         for t in threads:
