@@ -127,7 +127,7 @@ print("Listo, menciona el numero de clientes a los que quieres antender en simul
 opcion2 = int(input("Ingresa el numero de clientes: "))
 # Preparacion del log
 LogTxt = 'log_servidor' + \
-    '_'+str(datetime.datetime.now()) + '.txt'
+    '_'+str(time.time())) + '.txt'
 
 with open(LogTxt, 'w') as log:
     log.write("Fecha y hora de la prueba: " +
@@ -136,9 +136,9 @@ with open(LogTxt, 'w') as log:
 while True:
     tcpsock.listen(25)
     print("Esperando por conexiones entrantes...")
-    (conn, (ip, port)) = tcpsock.accept()
+    (conn, (ip, port))=tcpsock.accept()
     print('Conexion desde  ', (ip, port))
-    newthread = ClientThread(ip, port, conn)
+    newthread=ClientThread(ip, port, conn)
     threads.append(newthread)
     while len(threads) >= opcion2:
         for t in threads:
