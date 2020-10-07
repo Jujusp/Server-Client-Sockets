@@ -55,7 +55,7 @@ class ClientThread(Thread):
         self.ip = ip
         self.port = port
         self.sock = sock
-        print(" Nuevo Thread comenzado por"+ip+":"+str(port))
+        print(" Nuevo Thread comenzado por "+ip+":"+str(port))
 
     def run(self):
         tInicio = 0
@@ -120,9 +120,10 @@ threads = []
 # Aplicacion
 print("Hola!, bienvenido a la aplicacion del grupo 11, por favor selecciona el archivo de video a mandar: "+"\n")
 print("1. Video 1 de  100 MB"+"\n")
-print("2. Video 2 de  250 MB"+"\n")
+print("2. Video 2 de  250 MB"+"\n")1
 opcion = int(input("Ingresa una opción: "))
-fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4'
+#fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4'
+fileGlobal = 'dogs.jpg'
 print("Listo, menciona el numero de clientes a los que quieres antender en simultaneo para enviar el archivo: "+"\n")
 opcion2 = int(input("Ingresa el numero de clientes: "))
 # Preparacion del log

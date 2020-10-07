@@ -1,2 +1,0 @@
-Fecha y hora de la prueba: 2020-10-06 20:38:48.363976
-Tiempo de inicio de ejecucion de Th_0 : 1602034728468842800
