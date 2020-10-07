@@ -142,7 +142,7 @@ while True:
     threads.append(newthread)
     while len(threads) >= opcion2:
         for t in threads:
-            threads[t].start()
+            t.start()
         for t in threads:
-            threads[t].join()
+            t.join()
             threads.remove(t)
