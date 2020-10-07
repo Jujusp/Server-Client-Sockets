@@ -101,8 +101,10 @@ class ClientThread(Thread):
         self.sock.close()
         with open(LogTxt, 'w') as log:
             tFinal = time.time_ns()
-            log.write("Tiempo final de ejecucion del th" + self.id + : " + str(tFinal) + '\n')
-            log.write("Tiempo de ejecucion desde inicio de la prueba" + self.id + : " + str((tFinal-tInicio)) + '\n')
+            log.write("Tiempo final de ejecucion del th" +
+                      self.id + ": " + str(tFinal) + '\n')
+            log.write("Tiempo de ejecucion desde inicio de la prueba" +
+                      self.id + ": " + str((tFinal-tInicio)) + '\n')
             log.write("Numero de paquetes enviados hasta el th" + self.id + ": " +
                       str(numPaquetesEnviados) + "\n")
             log.write("Numero de paquetes recibidos hasta el th" + self.id + ": " +
