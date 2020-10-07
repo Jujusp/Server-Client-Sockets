@@ -68,8 +68,10 @@ class ClientThread(Thread):
             tInicio = time.time_ns()
             log.write("Tiempo de inicio de ejecucion de Th_" +
                       str(self.id)+" : "+str(tInicio)+'\n')
-            recived_f = 'imgt_thread' + \
-                str(self.id) + str(time.time()).split('.')[0] + '.jpg'
+            filenameToDown = recv_one_message(s).decode()
+            recived_f = filenameToDown.split('.')[0] + \
+                str(self.id) + str(time.time()
+                                   ).split('.')[0] + filenameToDown.split('.')[1]
 
             with open(recived_f, 'wb') as f:
                 print('Archivo abierto')

@@ -19,6 +19,7 @@ numPaquetesRecibidos = 0
 bytesEnviados = 0
 bytesRecibidos = 0
 fileGlobal = 0
+correctoGlobal = True
 
 
 def createVerificationCode(filename):
@@ -65,9 +66,13 @@ class ClientThread(Thread):
     def run(self):
         filename = fileGlobal
         f = open(filename, 'rb')
+        send_one_message(self.sock, filename.encode())
+
         while True:
             l = f.read(BUFFER_SIZE)
             while (l):
+                numPaquetesEnviados += 1
+                bytesEnviados += sys.getsizeof(l)
                 send_one_message(self.sock, l)
                 l = f.read(BUFFER_SIZE)
             if not l:
@@ -80,12 +85,15 @@ class ClientThread(Thread):
         send_one_message(self.sock, createVerificationCode(filename).encode())
         # Recibe respuesta del cliente
         print(self.sock)
-        rta = recv_one_message(self.sock)
-        print(rta.decode())
+        rta = recv_one_message(self.sock).decode()
+        print(rta)
+        correctoGlobal &= rta == 'HASH VERIFICADO'
         numPaquetesCliente, numBytesCliente = recv_one_message(
             self.sock).decode().split(';')
         print("num"+numPaquetesCliente)
+        numPaquetesRecibidos += numPaquetesCliente
         print("by"+numBytesCliente)
+        bytesRecibidos += numBytesCliente
         self.sock.close()
 
 
@@ -106,9 +114,9 @@ LogTxt = 'log_servidor' + \
     '_'+str(time.time()).split('.')[0] + '.txt'
 while True:
     tcpsock.listen(25)
-    print("Waiting for incoming connections...")
+    print("Esperando por conexiones entrantes...")
     (conn, (ip, port)) = tcpsock.accept()
-    print('Got connection from ', (ip, port))
+    print('Conexion desde  ', (ip, port))
     newthread = ClientThread(ip, port, conn)
     threads.append(newthread)
     while len(threads) >= opcion2:
