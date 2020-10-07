@@ -12,14 +12,7 @@ END_TRANSMISION = b'TERMINO'
 # Variable que almacena el codigo md5 en hexadecimal del archivo a enviar
 Verification_code = 'NoCodigo'
 # Variables usadas por el log
-tInicio = 0
-tFinal = 0
-numPaquetesEnviados = 0
-numPaquetesRecibidos = 0
-bytesEnviados = 0
-bytesRecibidos = 0
-fileGlobal = 0
-correctoGlobal = True
+fileGlobal = ""
 
 
 def createVerificationCode(filename):
@@ -61,12 +54,21 @@ class ClientThread(Thread):
         self.ip = ip
         self.port = port
         self.sock = sock
-        print(" New thread started for "+ip+":"+str(port))
+        print(" Nuevo Thread comenzado por"+ip+":"+str(port))
 
     def run(self):
+        tInicio = 0
+        tFinal = 0
+        numPaquetesEnviados = 0
+        numPaquetesRecibidos = 0
+        bytesEnviados = 0
+        bytesRecibidos = 0
+        fileGlobal = 0
+        correctoGlobal = True
+
         filename = fileGlobal
+        print(filename)
         f = open(filename, 'rb')
-        send_one_message(self.sock, filename.encode())
 
         while True:
             l = f.read(BUFFER_SIZE)
@@ -95,6 +97,19 @@ class ClientThread(Thread):
         print("by"+numBytesCliente)
         bytesRecibidos += numBytesCliente
         self.sock.close()
+        with open(LogTxt, 'w') as log:
+            tFinal = time.time_ns()
+            log.write("Tiempo final de ejecucion: " + str(tFinal) + '\n')
+            log.write("Tiempo de ejecucion: " + str((tFinal-tInicio)) + '\n')
+            log.write("Numero de paquetes enviados: " +
+                      str(numPaquetesEnviados) + "\n")
+            log.write("Numero de paquetes recibidos: " +
+                      str(numPaquetesRecibidos) + "\n")
+            log.write("Numero de bytes enviados: " + str(bytesEnviados) + "\n")
+            log.write("Numero de bytes recibidos: " +
+                      str(bytesRecibidos) + "\n")
+            log.write("Correctitud del envio: " + str(correctoGlobal) + "\n")
+            log.close()
 
 
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -112,6 +127,11 @@ opcion2 = int(input("Ingresa el numero de clientes: "))
 # Preparacion del log
 LogTxt = 'log_servidor' + \
     '_'+str(time.time()).split('.')[0] + '.txt'
+
+with open(LogTxt, 'w') as log:
+    log.write("Fecha y hora de la prueba: " +
+              str(datetime.datetime.now()) + '\n')
+    log.close()
 while True:
     tcpsock.listen(25)
     print("Esperando por conexiones entrantes...")
