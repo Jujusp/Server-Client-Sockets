@@ -99,7 +99,7 @@ class ClientThread(Thread):
                 print('Resultado de validacion: ' + rtaVerificacion)
                 send_one_message(s, rtaVerificacion.encode())
                 send_one_message(
-                    s, str(numPaquetesRecibidos+";"+bytesRecibidos).encode())
+                    s, (str(numPaquetesRecibidos)+";"+str(bytesRecibidos)).encode())
             print('Archivo descargado con exito')
             s.close()
             print('Conexion cerrada')

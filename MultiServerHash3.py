@@ -2,6 +2,8 @@ import socket
 from threading import Thread
 import struct
 import hashlib
+import time
+import sys
 TCP_IP = ''
 TCP_PORT = 65432
 BUFFER_SIZE = 1024
@@ -9,6 +11,14 @@ END_TRANSMISION = b'TERMINO'
 
 # Variable que almacena el codigo md5 en hexadecimal del archivo a enviar
 Verification_code = 'NoCodigo'
+# Variables usadas por el log
+tInicio = 0
+tFinal = 0
+numPaquetesEnviados = 0
+numPaquetesRecibidos = 0
+bytesEnviados = 0
+bytesRecibidos = 0
+fileGlobal = 0
 
 
 def createVerificationCode(filename):
@@ -53,7 +63,7 @@ class ClientThread(Thread):
         print(" New thread started for "+ip+":"+str(port))
 
     def run(self):
-        filename = 'dogs.jpg'
+        filename = fileGlobal
         f = open(filename, 'rb')
         while True:
             l = f.read(BUFFER_SIZE)
@@ -83,15 +93,27 @@ tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 tcpsock.bind((TCP_IP, TCP_PORT))
 threads = []
-
+# Aplicacion
+print("Hola!, bienvenido a la aplicacion del grupo 11, por favor selecciona el archivo de video a mandar: "+"\n")
+print("1. Video 1 de  100 MB"+"\n")
+print("2. Video 2 de  250 MB"+"\n")
+opcion = int(input("Ingresa una opción: "))
+fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4'
+print("Listo, menciona el numero de clientes a los que quieres antender en simultaneo para enviar el archivo: "+"\n")
+opcion2 = int(input("Ingresa el numero de clientes: "))
+# Preparacion del log
+LogTxt = 'log_servidor' + \
+    '_'+str(time.time()).split('.')[0] + '.txt'
 while True:
     tcpsock.listen(25)
     print("Waiting for incoming connections...")
     (conn, (ip, port)) = tcpsock.accept()
     print('Got connection from ', (ip, port))
     newthread = ClientThread(ip, port, conn)
-    newthread.start()
     threads.append(newthread)
-
-for t in threads:
-    t.join()
+    while len(threads) >= opcion2:
+        for t in threads:
+            threads[t].start()
+        for t in threads:
+            threads[t].join()
+            threads.remove(t)
