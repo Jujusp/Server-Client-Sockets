@@ -38,6 +38,7 @@ def recvall(sock, count):
 
 def send_one_message(sock, data):
     length = len(data)
+    print(length)
     sock.sendall(struct.pack('!I', length))
     sock.sendall(data)
 
