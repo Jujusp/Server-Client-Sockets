@@ -68,7 +68,7 @@ class ClientThread(Thread):
         correctoGlobal = True
 
         filename = fileGlobal
-        print(filename)
+        print('Filename'+filename)
         f = open(filename, 'rb')
 
         while True:
