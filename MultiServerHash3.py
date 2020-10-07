@@ -72,7 +72,10 @@ class ClientThread(Thread):
         print(self.sock)
         rta = recv_one_message(self.sock)
         print(rta.decode())
-
+        numPaquetesCliente, numBytesCliente = recv_one_message(
+            self.sock).decode().split(';')
+        print("num"+numPaquetesCliente)
+        print("by"+numBytesCliente)
         self.sock.close()
 
 
