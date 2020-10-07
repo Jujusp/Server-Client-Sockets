@@ -64,7 +64,7 @@ class ClientThread(Thread):
         numPaquetesRecibidos = 0
         bytesEnviados = 0
         bytesRecibidos = 0
-        fileGlobal = 0
+        global fileGlobal
         correctoGlobal = True
 
         filename = fileGlobal
