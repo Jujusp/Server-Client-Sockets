@@ -15,7 +15,6 @@ BUFFER_SIZE = 1024
 # Constante que representa el mensaje de que se finalizo la transmisión de un mensaje
 END_TRANSMISION = b'TERMINO'
 
-
 # Método que permite verificar la integridad del archivo enviado
 def VerificateHash(originalHash, filename):
     file = open(filename, 'rb')
@@ -25,8 +24,7 @@ def VerificateHash(originalHash, filename):
     else:
         return "HASH ALTERADO"
 
-
-""" Los siguientes métodos auxiliares se usaron para conformar los mensajes con protocolo TCP
+""" Los siguientes metodos auxiliares se usaron para conformar los mensajes con protocolo TCP
 Fueron tomados de este blog: https://stupidpythonideas.blogspot.com/2013/05/sockets-are-byte-streams-not-message.html"""
 # Método auxiliar que cumple la funcion de recibir en su totalidad un paquete (contraparte del método sendall de socket)
 def recvall(sock, count):
@@ -51,14 +49,14 @@ def recv_one_message(sock):
     length, = struct.unpack('!I', lengthbuf)
     return recvall(sock, length)
 
-# Clase que genera un Thread de tipo cliente el cual genera un log único
+# Clase que genera un Thread de tipo cliente el cual genera un log unico
 class ClientThread(Thread):
     #Metodo que inicia un Thread
     def __init__(self, id):
         Thread.__init__(self)
         print(" Nuevo thread en"+str(time.time())+":"+str(TCP_PORT))
         self.id = id
-    #Metodo que inicia la ejecución del Thread Cliente
+    #Metodo que inicia la ejecucion del Thread Cliente
     def run(self):
         # Preparacion del log
         LogTxt = 'log_cliente_' + \
@@ -113,5 +111,5 @@ class ClientThread(Thread):
             s.close()
             print('Conexion cerrada')
 #Inicializa los Threads definidos por el range
-for i in range(1):
+for i in range(2):
     ClientThread(i).start()
