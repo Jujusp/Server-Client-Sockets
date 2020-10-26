@@ -27,7 +27,7 @@ def createVerificationCode(filename):
 
 """ Los siguientes metodos auxiliares se usaron para conformar los mensajes con protocolo TCP
 Fueron tomados de este blog: https://stupidpythonideas.blogspot.com/2013/05/sockets-are-byte-streams-not-message.html"""
-# Método auxiliar que cumple la funcion de recibir en su totalidad un paquete (contraparte del método sendall de socket)
+# Metodo auxiliar que cumple la funcion de recibir en su totalidad un paquete (contraparte del metodo sendall de socket)
 def recvall(sock, count):
     buf = b''
     while count:
