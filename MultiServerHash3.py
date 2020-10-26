@@ -38,7 +38,7 @@ def recvall(sock, count):
         count -= len(newbuf)
     return buf
 
-# Envía un mensaje que se compone de una estructura que indica la cantidad de bytes en su encabezado
+# Envia un mensaje que se compone de una estructura que indica la cantidad de bytes en su encabezado
 def send_one_message(sock, data):
     length = len(data)
     sock.sendall(struct.pack('!I', length))
