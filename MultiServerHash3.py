@@ -104,19 +104,19 @@ class ClientThread(Thread):
         with open(LogTxt, 'w') as log:
             tFinal = time.time()
             log.write("Tiempo final de ejecucion del th" +
-                      self.id + ": " + str(tFinal) + '\n')
+                      str(self.id) + ": " + str(tFinal) + '\n')
             log.write("Tiempo de ejecucion desde inicio de la prueba" +
-                      self.id + ": " + str((tFinal-tInicio)) + '\n')
-            log.write("Numero de paquetes enviados hasta el th" + self.id + ": " +
+                      str(self.id) + ": " + str((tFinal-tInicio)) + '\n')
+            log.write("Numero de paquetes enviados hasta el th" + str(self.id) + ": " +
                       str(numPaquetesEnviados) + "\n")
-            log.write("Numero de paquetes recibidos hasta el th" + self.id + ": " +
+            log.write("Numero de paquetes recibidos hasta el th" + str(self.id) + ": " +
                       str(numPaquetesRecibidos) + "\n")
             log.write("Numero de bytes enviados hasta el th" +
-                      self.id + ": " + str(bytesEnviados) + "\n")
-            log.write("Numero de bytes recibidos hasta el th" + self.id + ": " +
+                      str(self.id) + ": " + str(bytesEnviados) + "\n")
+            log.write("Numero de bytes recibidos hasta el th" + str(self.id) + ": " +
                       str(bytesRecibidos) + "\n")
             log.write("Correctitud del envio hasta el th" +
-                      self.id + ": " + str(correctoGlobal) + "\n")
+                      str(self.id) + ": " + str(correctoGlobal) + "\n")
             log.close()
 
 # Crea el socket por el que el servidor estara escuchando a los clientes

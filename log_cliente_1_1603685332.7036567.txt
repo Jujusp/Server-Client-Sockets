@@ -1,6 +1,0 @@
-Fecha y hora de la prueba: 2020-10-25 23:08:52.705650
-Tiempo de inicio de ejecucion de Th_1 : 1603685332815560300
-Tiempo final de ejecucion de Th_1 : 1603685533162799900
-Tiempo de ejecucion de Th_1 : 200347239600
-Numero paquetes recibidos de Th_1 : 99367
-Bytes recibidos por Th_1 : 105030038
