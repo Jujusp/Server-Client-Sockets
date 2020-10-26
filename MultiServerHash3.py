@@ -25,7 +25,7 @@ def createVerificationCode(filename):
         print("Codigo de verificacion:"+Verification_code)
     return Verification_code
 
-""" Los siguientes métodos auxiliares se usaron para conformar los mensajes con protocolo TCP
+""" Los siguientes metodos auxiliares se usaron para conformar los mensajes con protocolo TCP
 Fueron tomados de este blog: https://stupidpythonideas.blogspot.com/2013/05/sockets-are-byte-streams-not-message.html"""
 # Método auxiliar que cumple la funcion de recibir en su totalidad un paquete (contraparte del método sendall de socket)
 def recvall(sock, count):
@@ -52,7 +52,7 @@ def recv_one_message(sock):
 
 # Clase que genera un Thread que representa un cliente al cual transmitirle los datos dentro del servidor
 class ClientThread(Thread):
-    # Contructor del Thread
+    # Constructor del Thread
     def __init__(self, ip, port, sock, id):
         Thread.__init__(self)
         self.ip = ip
@@ -119,7 +119,7 @@ class ClientThread(Thread):
                       self.id + ": " + str(correctoGlobal) + "\n")
             log.close()
 
-# Crea el socket por el que el servidor estará escuchando a los clientes
+# Crea el socket por el que el servidor estara escuchando a los clientes
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 tcpsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 tcpsock.bind((TCP_IP, TCP_PORT))
@@ -128,7 +128,7 @@ threads = []
 print("Hola!, bienvenido a la aplicacion del grupo 11, por favor selecciona el archivo de video a mandar: "+"\n")
 print("1. Video 1 de  100 MB"+"\n")
 print("2. Video 2 de  250 MB"+"\n")
-opcion = int(input("Ingresa una opción: "))
+opcion = int(input("Ingresa una opcion: "))
 fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4'
 print("Listo, menciona el numero de clientes a los que quieres antender en simultaneo para enviar el archivo: "+"\n")
 opcion2 = int(input("Ingresa el numero de clientes: "))
