@@ -73,7 +73,7 @@ class ClientThread(Thread):
             # Ejecucion del programa
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((TCP_IP, TCP_PORT))
-            tInicio = time.time_ns()
+            tInicio = time.time()
             log.write("Tiempo de inicio de ejecucion de Th_" +
                       str(self.id)+" : "+str(tInicio)+'\n')
             recived_f = 'archivo' + \
@@ -87,7 +87,7 @@ class ClientThread(Thread):
                     if repr(data) == repr(END_TRANSMISION):
                         f.close()
                         print('file close()')
-                        tFinal = time.time_ns()
+                        tFinal = time.time()
                         log.write("Tiempo final de ejecucion de Th_"+str(self.id) + " : "
                                   + str(tFinal) + '\n')
                         log.write("Tiempo de ejecucion de Th_"+str(self.id)+" : "

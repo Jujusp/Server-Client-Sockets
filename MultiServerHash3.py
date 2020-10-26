@@ -63,7 +63,7 @@ class ClientThread(Thread):
     #Metodo que ejecuta el thread
     def run(self):
         #Variables para la escritura del log
-        tInicio = 0
+        tInicio = time.time()
         tFinal = 0
         numPaquetesEnviados = 0
         numPaquetesRecibidos = 0
@@ -102,7 +102,7 @@ class ClientThread(Thread):
         bytesRecibidos += int(numBytesCliente)
         self.sock.close()
         with open(LogTxt, 'w') as log:
-            tFinal = time.time_ns()
+            tFinal = time.time()
             log.write("Tiempo final de ejecucion del th" +
                       self.id + ": " + str(tFinal) + '\n')
             log.write("Tiempo de ejecucion desde inicio de la prueba" +
@@ -134,7 +134,7 @@ print("Listo, menciona el numero de clientes a los que quieres antender en simul
 opcion2 = int(input("Ingresa el numero de clientes: "))
 # Preparacion del log
 LogTxt = 'log_servidor' + \
-    '_'+str(time.time()) + '.txt'
+    '_'+str(datetime.datetime.now()).split('.')[0] + '.txt'
 with open(LogTxt, 'w') as log:
     log.write("Fecha y hora de la prueba: " +
               str(datetime.datetime.now()) + '\n')
