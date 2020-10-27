@@ -91,6 +91,10 @@ class ClientThread(Thread):
         send_one_message(self.sock, createVerificationCode(filename).encode())
         # Recibe respuesta del cliente
         print(self.sock)
+
+        # Parte que representa la respuesta de verificacion de hash del cliente, para las pruebas de Jmeter se comento
+        # Debido a que los threads generados por TCP Sampler, no pueden generar respuesta del codigo de Hash 
+
         #rta = recv_one_message(self.sock).decode()
         #print(rta)
         #correctoGlobal &= rta == 'HASH VERIFICADO'
@@ -129,7 +133,7 @@ print("Hola!, bienvenido a la aplicacion del grupo 11, por favor selecciona el a
 print("1. Video 1 de  100 MB"+"\n")
 print("2. Video 2 de  250 MB"+"\n")
 opcion = int(input("Ingresa una opcion: "))
-fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4'
+fileGlobal = 'ventilador_100.mp4' if (opcion == 1) else 'hielo_250.mp4' if (opcion == 2) else 'secuencia.mp4'
 print("Listo, menciona el numero de clientes a los que quieres antender en simultaneo para enviar el archivo: "+"\n")
 opcion2 = int(input("Ingresa el numero de clientes: "))
 # Preparacion del log
