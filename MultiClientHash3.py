@@ -111,5 +111,5 @@ class ClientThread(Thread):
             s.close()
             print('Conexion cerrada')
 #Inicializa los Threads definidos por el range
-for i in range(2):
+for i in range(1):
     ClientThread(i).start()

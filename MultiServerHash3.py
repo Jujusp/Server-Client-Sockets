@@ -91,15 +91,15 @@ class ClientThread(Thread):
         send_one_message(self.sock, createVerificationCode(filename).encode())
         # Recibe respuesta del cliente
         print(self.sock)
-        rta = recv_one_message(self.sock).decode()
-        print(rta)
-        correctoGlobal &= rta == 'HASH VERIFICADO'
-        numPaquetesCliente, numBytesCliente = recv_one_message(
-            self.sock).decode().split(';')
-        print("num"+numPaquetesCliente)
-        numPaquetesRecibidos += int(numPaquetesCliente)
-        print("by"+numBytesCliente)
-        bytesRecibidos += int(numBytesCliente)
+        #rta = recv_one_message(self.sock).decode()
+        #print(rta)
+        #correctoGlobal &= rta == 'HASH VERIFICADO'
+        #numPaquetesCliente, numBytesCliente = recv_one_message(
+        #    self.sock).decode().split(';')
+        #print("num"+numPaquetesCliente)
+        #numPaquetesRecibidos += int(numPaquetesCliente)
+        #print("by"+numBytesCliente)
+        #bytesRecibidos += int(numBytesCliente)
         self.sock.close()
         with open(LogTxt, 'w') as log:
             tFinal = time.time()
